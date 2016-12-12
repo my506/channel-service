@@ -1,0 +1,104 @@
+<!doctype html>
+
+<meta charset="utf-8">
+
+<div id="demo">
+</div>
+<script type="text/javascript">
+
+var state = function(graph, x, y, shape, color, text){
+        var cell;
+        if(shape==="rect"){
+            cell = new joint.shapes.basic.Rect({
+                position: { x: x, y: y },//坐标
+                size: { width: 140, height: 40 },//宽高
+                attrs: { 
+                    rect: { fill: color,rx: 10, ry: 10, 'stroke-width': 0},//填充颜色
+                    text: { text: text } //显示文字
+                }
+            });
+        } 
+        graph.addCell(cell);
+        return cell;
+    };
+    
+    //定义连线
+    function link(graph, source, target, label){
+        var cell = new joint.dia.Link({ 
+            source: { id: source.id },
+            target: { id: target.id },
+            labels: [{ position: 0.5, attrs: { text: { text: label || '', 'font-weight': 'bold' } } }],
+            router: { name: 'manhattan' },//设置连线弯曲样式 manhattan直角
+            attrs: {
+                '.connection': {
+                    stroke: '#333333',//连线颜色
+                    'stroke-width': 2//连线粗细
+                },
+                '.marker-target': {
+                    fill: '#333333',//箭头颜色
+                    d: 'M 10 0 L 0 5 L 10 10 z'//箭头样式
+                }
+            }
+        });
+        graph.addCell(cell);
+        return cell;        
+    }
+
+    var graph=new joint.dia.Graph;
+    var ElementView = joint.dia.ElementView.extend({
+        pointermove: function(evt, x, y) {}
+    });
+
+    paper=new joint.dia.Paper({
+        el:$("#demo"),
+        width:2000,
+        height:500,
+        gridSize:10,
+        perpendicularLinks:false,
+        model:graph,
+        elementView: ElementView
+//        linkView:LinkView
+    });
+
+    var state1 = state(graph,100,60,'rect','gray','state1');
+    var state2 = state(graph,300,60,'rect','gray','state2');
+    var state3 = state(graph,500,60,'rect','gray','state3');
+    var state4 = state(graph,700,60,'rect','red','state4');
+    var state5 = state(graph,900,60,'rect','gray','state5');
+    var state6 = state(graph,1100,60,'rect','gray','state6');
+    var state7 = state(graph,1300,60,'rect','gray','state7');
+    var state8 = state(graph,1500,60,'rect','gray','state8');
+    var state9 = state(graph,1800,60,'rect','gray','state9');
+
+    var link1 = link(graph,state1,state2,'haha333');
+    var link1 = link(graph,state2,state3,'haha');
+    var link1 = link(graph,state3,state4,'haha');
+    var link1 = link(graph,state4,state5,'haha');
+    var link1 = link(graph,state5,state6,'haha');
+    var link1 = link(graph,state6,state7,'haha');
+    var link1 = link(graph,state7,state8,'haha');
+    var link1 = link(graph,state8,state9,'haha');
+
+var pn = joint.shapes.pn;
+    var pReady = new pn.Place({
+      position: {x: 140, y: 50},
+      attrs: {
+          '.label': {text: 'ready', fill: '#7c68fc'},
+          '.root': {stroke: '#9586fd', 'stroke-width': 3},
+          '.tokens > circle': {fill: '#7a7e9b'}
+      },
+      tokens: 1
+    });
+    var pIdle = pReady.clone().attr({
+        '.label': {text: 'idle'}
+    }).position(140, 260).set('tokens', 2);
+
+graph.addCell([pReady,pIdle]);
+graph.addCell([
+    link(graph,pReady, pIdle, '牛')
+]);
+
+
+
+</script>
+
