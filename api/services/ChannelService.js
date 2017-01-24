@@ -18,6 +18,8 @@ module.exports = {
 	 * @callback:: 回调方法(err, value)如果正确,返回校验;
 	 */
 	req: function(service,channel,message,next){
+
+		sails.log.info(JSON.stringify(UtilsService.idCard.info('130503670401001')));
 		sails.log.info(thisName+'-> req ('+channel+','+service+')');		
 		async.waterfall([
 			//a-log:记录请求

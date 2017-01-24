@@ -5,7 +5,10 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "bson": "^1.0.4",
+    "bson-objectid": "^1.1.4",
     "ejs": "2.3.4",
+    "es6-promise": "^4.0.5",
     "express-xml-bodyparser": "^0.3.0",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.0.0",
@@ -19,16 +22,18 @@
     "grunt-contrib-watch": "1.0.0",
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.5.2",
+    "idcard": "^3.2.1",
     "include-all": "^1.0.0",
     "joi": "^9.2.0",
     "moment": "^2.17.1",
     "rc": "1.0.1",
     "sails": "~0.12.7",
     "sails-disk": "~0.10.9",
-    "sails-mongo": "^0.12.1",
+    "sails-mongo": "^0.12.2",
     "skipper": "^0.7.2",
     "tv4": "^1.2.7",
-    "x2js": "^3.1.0"
+    "x2js": "^3.1.0",
+    "zoodubbo": "^0.1.2"
   },
   "scripts": {
     "debug": "node debug app.js",

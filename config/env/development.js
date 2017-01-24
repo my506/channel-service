@@ -20,5 +20,8 @@ module.exports = {
   // models: {
   //   connection: 'someMongodbServer'
   // }
-
+  dubboConf: {
+    version :'2.8.3',
+    url :'dubbotest.sinosafe.com.cn:2181'
+  }  
 };

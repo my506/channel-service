@@ -6,8 +6,28 @@
  */
 
 var moment = require('moment');
+var objectid = require("bson-objectid");
 var thisName = 'ProductService';
-module.exports = {
+
+var fillDefault = function(template){
+	//系统编码
+	template.InfCode = 'M';
+	//请求时间
+	template.RequestTime = moment().format('YYYY-MM-DD HH:mm:ss'); 
+	//保单号
+	template.Main.PolicyNo = objectid();
+	//投保单号
+	template.Main.ProposalNo = objectid();
+	//入机时间
+	template.Main.InputDate = moment().format('YYYY-MM-DD HH:mm:ss'); 
+	template.Main.IssueDate = moment().format('YYYY-MM-DD'); 
+	//承保年限
+	template.Main.UwYear = moment().format('YYYY');
+
+	return template;
+}
+
+ module.exports = {
 
 	/*
 	 * req 产品模板<方案模板|计算模板<渠道模板
@@ -41,6 +61,8 @@ module.exports = {
 						return cb(err, service,channel,message,audit,conf,product,plan, null);		     
 					}
 					var prodTemplate = prod.template; //险种、险别的保额、保费都是0;
+					//填充默认值
+					prodTemplate = fillDefault(prodTemplate);
 					var rstTemplate = {}; //结果模板
 					//产品模板<方案模板
 					if(plan && prod[plan] && prod[plan].template){						
@@ -52,7 +74,6 @@ module.exports = {
 							rstTemplate = _.defaultsDeep(chnlTemplate, rstTemplate);
 						}
 						//return cb(err, service,channel,message,audit,conf,product,plan, rstTemplate);
-
 					}//else 
 					if(prod && prod.calculate){//计算摸吧
 						sails.log.info(thisName+'-> req ('+channel+','+service+'):'+'calculate:'+prod.calculate);
